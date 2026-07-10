@@ -1,0 +1,37 @@
+<% content_for(:title) { "Log Spending — #{@food_fund.name}" } %>
+
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card shadow-sm">
+      <div class="card-header bg-success text-white">
+        <h4 class="mb-0">Log Spending for <%= @food_fund.name %></h4>
+      </div>
+      <div class="card-body">
+        <% if @spending.errors.any? %>
+          <div class="alert alert-danger">
+            <ul class="mb-0">
+              <% @spending.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <%= form_with model: [@food_fund, @spending] do |f| %>
+          <div class="mb-3">
+            <%= f.label :amount, "Amount (€)", class: "form-label" %>
+            <%= f.number_field :amount, step: "0.01", min: "0.01", class: "form-control", placeholder: "e.g. 12.50", autofocus: true %>
+          </div>
+
+          <div class="mb-4">
+            <%= f.label :description, "Description (optional)", class: "form-label" %>
+            <%= f.text_field :description, class: "form-control", placeholder: "e.g. Mercadona fruits" %>
+          </div>
+
+          <%= f.submit "Log Spending", class: "btn btn-success" %>
+          <%= link_to "Cancel", food_fund_path(@food_fund), class: "btn btn-outline-secondary ms-2" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

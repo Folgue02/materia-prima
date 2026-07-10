@@ -1,0 +1,14 @@
+<% content_for(:title) { "Edit #{@user.name} — Materia Prima" } %>
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-header bg-dark text-white">
+        <h4 class="mb-0">Edit User</h4>
+      </div>
+      <div class="card-body">
+        <%= render "form", user: @user %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<% content_for(:title) { "Food Funds — Materia Prima" } %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3">All Food Funds</h1>
+  <% if admin? %>
+    <%= link_to "New Food Fund", new_food_fund_path, class: "btn btn-dark" %>
+  <% end %>
+</div>
+
+<% if @food_funds.any? %>
+  <div class="row g-3">
+    <% @food_funds.each do |fund| %>
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-body">
+            <h5 class="card-title"><%= fund.name %></h5>
+            <% if fund.description.present? %>
+              <p class="card-text text-muted small"><%= fund.description %></p>
+            <% end %>
+            <p class="mb-1">
+              <span class="badge bg-secondary">€<%= number_with_precision(fund.total_spent, precision: 2) %> total</span>
+              <span class="badge bg-info text-dark"><%= fund.users.count %> members</span>
+            </p>
+          </div>
+          <div class="card-footer bg-transparent d-flex justify-content-between align-items-center">
+            <%= link_to "View", fund, class: "btn btn-sm btn-outline-dark" %>
+            <% if current_user.subscribed_to?(fund) %>
+              <span class="badge bg-success">Joined</span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="alert alert-info">
+    No food funds yet.
+    <% if admin? %>
+      <%= link_to "Create one!", new_food_fund_path %>
+    <% end %>
+  </div>
+<% end %>

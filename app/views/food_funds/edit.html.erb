@@ -1,0 +1,14 @@
+<% content_for(:title) { "Edit #{@food_fund.name} — Materia Prima" } %>
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-header bg-dark text-white">
+        <h4 class="mb-0">Edit Food Fund</h4>
+      </div>
+      <div class="card-body">
+        <%= render "form", food_fund: @food_fund %>
+      </div>
+    </div>
+  </div>
+</div>

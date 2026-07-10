@@ -1,0 +1,14 @@
+<% content_for(:title) { "New Food Fund — Materia Prima" } %>
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-header bg-dark text-white">
+        <h4 class="mb-0">New Food Fund</h4>
+      </div>
+      <div class="card-body">
+        <%= render "form", food_fund: @food_fund %>
+      </div>
+    </div>
+  </div>
+</div>

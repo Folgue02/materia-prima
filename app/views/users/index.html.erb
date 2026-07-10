@@ -1,0 +1,45 @@
+<% content_for(:title) { "Users — Materia Prima" } %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3">Users</h1>
+  <%= link_to "New User", new_user_path, class: "btn btn-dark" %>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-body p-0">
+    <table class="table table-hover mb-0">
+      <thead class="table-dark">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Total Spent</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td>
+              <% if user.admin? %>
+                <span class="badge bg-warning text-dark">Admin</span>
+              <% else %>
+                <span class="badge bg-secondary">User</span>
+              <% end %>
+            </td>
+            <td>€<%= number_with_precision(user.total_spent, precision: 2) %></td>
+            <td class="text-end">
+              <%= link_to "Edit", edit_user_path(user), class: "btn btn-sm btn-outline-secondary" %>
+              <% unless user == current_user %>
+                <%= button_to "Delete", user_path(user), method: :delete, class: "btn btn-sm btn-outline-danger ms-1",
+                              data: { turbo_confirm: "Delete #{user.name}?" } %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

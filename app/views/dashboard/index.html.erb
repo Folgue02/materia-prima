@@ -1,0 +1,60 @@
+<% content_for(:title) { "Dashboard — Materia Prima" } %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3">Your Dashboard</h1>
+  <span class="badge bg-secondary fs-6">Total you've spent: <strong>€<%= number_with_precision(@total_spent, precision: 2) %></strong></span>
+</div>
+
+<div class="row g-4">
+  <!-- Subscribed food funds -->
+  <div class="col-lg-7">
+    <div class="card shadow-sm h-100">
+      <div class="card-header bg-dark text-white">
+        <h5 class="mb-0">🥘 Your Food Funds</h5>
+      </div>
+      <div class="card-body">
+        <% if @subscribed_funds.any? %>
+          <div class="list-group list-group-flush">
+            <% @subscribed_funds.each do |fund| %>
+              <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                <div>
+                  <%= link_to fund.name, food_fund_path(fund), class: "fw-semibold text-decoration-none" %>
+                  <div class="text-muted small">
+                    Total spent: €<%= number_with_precision(fund.total_spent, precision: 2) %>
+                    &middot; Your share: €<%= number_with_precision(current_user.total_spent_on(fund), precision: 2) %>
+                  </div>
+                </div>
+                <%= link_to "View", food_fund_path(fund), class: "btn btn-sm btn-outline-dark" %>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-muted mb-0">You haven't joined any food fund yet.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Available food funds to join -->
+  <div class="col-lg-5">
+    <div class="card shadow-sm h-100">
+      <div class="card-header bg-secondary text-white">
+        <h5 class="mb-0">🔍 Available to Join</h5>
+      </div>
+      <div class="card-body">
+        <% if @available_funds.any? %>
+          <div class="list-group list-group-flush">
+            <% @available_funds.each do |fund| %>
+              <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                <span><%= fund.name %></span>
+                <%= button_to "Join", food_fund_subscription_path(fund), method: :post, class: "btn btn-sm btn-success" %>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-muted mb-0">You're in all available food funds!</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
